@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.znxsx.entity.Blog;
-import com.znxsx.lucene.BlogIndex;
+
 import com.znxsx.service.BlogService;
 import com.znxsx.service.CommentService;
 import com.znxsx.util.StringUtil;
@@ -36,7 +36,7 @@ public class BlogController {
 	private CommentService commentService;
 	
 	// 博客索引
-	private BlogIndex blogIndex=new BlogIndex();
+	
 	
 	
 	/**
@@ -82,14 +82,8 @@ public class BlogController {
 		}
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("mainPage", "foreground/blog/result.jsp");
-		List<Blog> blogList=blogIndex.searchBlog(q.trim());
-		Integer toIndex=blogList.size()>=Integer.parseInt(page)*10?Integer.parseInt(page)*10:blogList.size();
-		mav.addObject("blogList",blogList.subList((Integer.parseInt(page)-1)*10, toIndex));
-		mav.addObject("pageCode",this.genUpAndDownPageCode(Integer.parseInt(page), blogList.size(), q,10,request.getServletContext().getContextPath()));
-		mav.addObject("q",q);
-		mav.addObject("resultTotal",blogList.size());
-		mav.addObject("pageTitle","搜索关键字'"+q+"'结果页面_小熊笔记");
-		mav.setViewName("mainTemp");
+		
+	
 		return mav;
 	}
 	

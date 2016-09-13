@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.znxsx.entity.Blog;
 import com.znxsx.entity.PageBean;
-import com.znxsx.lucene.BlogIndex;
+
 import com.znxsx.service.BlogService;
 import com.znxsx.util.ResponseUtil;
 import com.znxsx.util.StringUtil;
@@ -37,7 +37,6 @@ public class BlogAdminController {
 	private BlogService blogService;
 	
 	// 博客索引
-	private BlogIndex blogIndex=new BlogIndex();
 	
 	/**
 	 * 添加或者修改博客信息
@@ -51,10 +50,10 @@ public class BlogAdminController {
 		int resultTotal=0; // 操作的记录条数
 		if(blog.getId()==null){
 			resultTotal=blogService.add(blog);
-			blogIndex.addIndex(blog); // 添加博客索引
+		
 		}else{
 			resultTotal=blogService.update(blog);
-			blogIndex.updateIndex(blog); // 更新博客索引
+			
 		}
 		JSONObject result=new JSONObject();
 		if(resultTotal>0){
@@ -106,7 +105,7 @@ public class BlogAdminController {
 		String []idsStr=ids.split(",");
 		for(int i=0;i<idsStr.length;i++){
 			blogService.delete(Integer.parseInt(idsStr[i]));
-			blogIndex.deleteIndex(idsStr[i]); // 删除对应博客的索引
+			
 		}
 		JSONObject result=new JSONObject();
 		result.put("success", true);
